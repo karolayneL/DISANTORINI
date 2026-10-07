@@ -21,84 +21,84 @@ export default function PrecificacaoPage() {
   const custoTotal = custoInsumos + custoCaixa;
   const resultado = calcularMarkupDivisor({
     custoTotal,
-    margemLucroPct: margemLucro,
-    comissaoPct: comissao,
-    impostosPct: impostos,
+    margemLucroPercentual: margemLucro,
+    comissaoPercentual: comissao,
+    impostosPercentual: impostos,
   });
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-          <Layers className="w-6 h-6 text-amber-400" />
-          Módulo 3: Simulador Avançado de Markup Divisor
+        <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
+          <Layers className="w-5 h-5 text-[#d4af37]" />
+          <span>Módulo 3: Simulador Avançado de Markup Divisor</span>
         </h1>
-        <p className="text-sm text-slate-400 mt-1">
-          Fórmula de precisão industrial: <span className="font-mono text-sky-400">Preço de Venda = Custo / (1 - ((Margem + Comissão + Impostos) / 100))</span>
+        <p className="text-xs text-neutral-400 mt-1">
+          Fórmula industrial: <span className="font-mono text-[#dfc175]">Preço de Venda = Custo / (1 - ((Margem + Comissão + Impostos) / 100))</span>
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Parâmetros de Entrada */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-5">
-          <h2 className="text-base font-semibold text-white flex items-center gap-2 pb-3 border-b border-slate-800">
-            <Calculator className="w-5 h-5 text-sky-400" />
+        <div className="bg-[#121216] p-6 sm:p-7 rounded-2xl border border-[#23232b] space-y-5 shadow-xl">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2 pb-3 border-b border-[#202028]">
+            <Calculator className="w-4 h-4 text-[#d4af37]" />
             <span>Parâmetros de Custo & Deduções</span>
           </h2>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Custo de Matéria-Prima (BOM) por Par (R$)</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Custo de Matéria-Prima (BOM) por Par (R$)</label>
               <input
                 type="number"
                 step="0.10"
                 value={custoInsumos}
                 onChange={(e) => setCustoInsumos(Number(e.target.value))}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-[#d4af37]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Custo Adicional Obrigatório da Caixa Externa (R$)</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Custo Adicional Obrigatório da Caixa Externa (R$)</label>
               <input
                 type="number"
                 step="0.05"
                 value={custoCaixa}
                 onChange={(e) => setCustoCaixa(Number(e.target.value))}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-amber-300 font-mono"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-[#dfc175] font-mono focus:outline-none focus:border-[#d4af37]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Margem de Lucro Alvo (%)</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Margem de Lucro Alvo (%)</label>
               <input
                 type="number"
                 step="0.5"
                 value={margemLucro}
                 onChange={(e) => setMargemLucro(Number(e.target.value))}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-[#d4af37]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Comissão de Vendas (%)</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Comissão de Vendas (%)</label>
               <input
                 type="number"
                 step="0.5"
                 value={comissao}
                 onChange={(e) => setComissao(Number(e.target.value))}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-[#d4af37]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Carga Tributária / Impostos (%)</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Carga Tributária / Impostos (%)</label>
               <input
                 type="number"
                 step="0.1"
                 value={impostos}
                 onChange={(e) => setImpostos(Number(e.target.value))}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-[#d4af37]"
               />
             </div>
           </div>
@@ -106,28 +106,28 @@ export default function PrecificacaoPage() {
 
         {/* Resultado & Decomposição */}
         <div className="space-y-6">
-          <div className="glass-panel p-6 rounded-2xl border border-amber-500/40 bg-gradient-to-b from-[#1c2541] to-[#0d1633] space-y-6 shadow-2xl">
+          <div className="bg-[#121216] p-6 sm:p-7 rounded-2xl border border-[#c5a059]/40 space-y-6 shadow-2xl">
             <div className="text-center space-y-1">
-              <span className="text-xs uppercase font-bold tracking-widest text-amber-400">Preço de Venda Final</span>
-              <div className="text-4xl font-extrabold text-white font-mono">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-[#c5a059]">Preço de Venda Final</span>
+              <div className="text-4xl font-black text-white font-mono tracking-tight">
                 R$ {resultado.precoVenda.toFixed(2)}
               </div>
-              <p className="text-xs text-slate-400">
-                Divisor de Markup Aplicado: <strong className="text-sky-300 font-mono">{resultado.divisorMarkup}</strong>
+              <p className="text-xs text-neutral-400 pt-1">
+                Divisor de Markup Aplicado: <strong className="text-[#dfc175] font-mono">{resultado.divisorMarkup}</strong>
               </p>
             </div>
 
             {/* Decomposição do Valor */}
-            <div className="space-y-3 pt-4 border-t border-slate-800 text-xs">
-              <div className="flex justify-between items-center text-slate-300">
+            <div className="space-y-3 pt-4 border-t border-[#202028] text-xs">
+              <div className="flex justify-between items-center text-neutral-300">
                 <span>Custo Fabril Total:</span>
-                <span className="font-mono font-bold text-slate-200">R$ {custoTotal.toFixed(2)}</span>
+                <span className="font-mono font-bold text-white">R$ {custoTotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center text-emerald-400">
                 <span>Lucro Líquido ({margemLucro}%):</span>
                 <span className="font-mono font-bold">+ R$ {resultado.lucroAbsoluto.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between items-center text-sky-400">
+              <div className="flex justify-between items-center text-[#dfc175]">
                 <span>Comissão de Venda ({comissao}%):</span>
                 <span className="font-mono font-bold">+ R$ {resultado.comissaoAbsoluta.toFixed(2)}</span>
               </div>
@@ -138,8 +138,8 @@ export default function PrecificacaoPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400 flex items-start gap-3">
-            <Info className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
+          <div className="p-4 rounded-xl bg-[#0d0d10] border border-[#23232b] text-xs text-neutral-400 flex items-start gap-3">
+            <Info className="w-4 h-4 text-[#d4af37] flex-shrink-0 mt-0.5" />
             <p>
               O <strong>Markup Divisor</strong> assegura que após a dedução dos percentuais sobre a receita bruta (venda), a fábrica mantenha exatamente a margem de lucro projetada sobre o custo dos calçados.
             </p>

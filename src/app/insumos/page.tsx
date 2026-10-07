@@ -4,9 +4,7 @@ import React, { useState } from 'react';
 import { 
   Scissors, 
   Plus, 
-  TrendingDown, 
   ShieldCheck, 
-  AlertTriangle,
   Building2,
   DollarSign
 } from 'lucide-react';
@@ -72,11 +70,11 @@ export default function InsumosPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Scissors className="w-6 h-6 text-sky-400" />
-            Módulo 2: Matérias-Primas, Fornecedores & Cotações
+          <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
+            <Scissors className="w-5 h-5 text-[#d4af37]" />
+            <span>Módulo 2: Matérias-Primas, Fornecedores & Cotações</span>
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Gestão de matérias-primas com exigência de no mínimo 4 cotações ativas por insumo.
           </p>
         </div>
@@ -85,17 +83,17 @@ export default function InsumosPage() {
       {/* Tabela de Insumos */}
       <div className="space-y-4">
         {insumos.map((item) => (
-          <div key={item.id} className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
-              <div>
-                <span className="text-xs font-mono font-bold text-sky-400 mr-2">{item.codigo}</span>
-                <span className="font-bold text-white text-base">{item.nome}</span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 ml-3">
+          <div key={item.id} className="bg-[#121216] p-6 rounded-2xl border border-[#23232b] shadow-xl space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#202028]">
+              <div className="flex items-center">
+                <span className="text-xs font-mono font-bold text-[#dfc175] mr-2.5">{item.codigo}</span>
+                <span className="font-bold text-white text-sm">{item.nome}</span>
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#181820] text-neutral-400 ml-3 border border-[#282832]">
                   {item.categoria} • {item.unidade}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-400">Status de Cotações:</span>
+                <span className="text-xs text-neutral-400">Status:</span>
                 <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" /> 4 cotações validadas
                 </span>
@@ -106,27 +104,27 @@ export default function InsumosPage() {
               {item.cotacoes.map((c, idx) => (
                 <div 
                   key={idx}
-                  className={`p-3.5 rounded-xl text-xs space-y-1 ${
+                  className={`p-3.5 rounded-xl text-xs space-y-1.5 transition-all ${
                     c.menor 
-                      ? 'bg-emerald-950/80 border border-emerald-500/50 text-white' 
+                      ? 'bg-[#c5a059]/15 border border-[#c5a059]/50 text-white shadow-sm' 
                       : c.estoque 
-                        ? 'bg-slate-900 border border-slate-800 text-slate-300' 
-                        : 'bg-slate-950 border border-slate-900 text-slate-500 opacity-60'
+                        ? 'bg-[#09090b] border border-[#23232b] text-neutral-300' 
+                        : 'bg-[#09090b]/50 border border-[#1a1a20] text-neutral-600 opacity-50'
                   }`}
                 >
                   <div className="flex items-center justify-between font-semibold">
                     <span className="truncate">{c.fornecedor}</span>
                     {c.menor && (
-                      <span className="px-1.5 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold text-[10px]">
+                      <span className="px-1.5 py-0.5 rounded bg-gradient-to-r from-[#dfc175] to-[#c5a059] text-black font-bold text-[9px] uppercase">
                         Menor Preço
                       </span>
                     )}
                   </div>
                   <div className="flex items-center justify-between pt-1">
-                    <span className="font-mono text-base font-bold text-white">
+                    <span className="font-mono text-sm font-bold text-white">
                       R$ {c.preco.toFixed(2)}
                     </span>
-                    <span className={c.estoque ? 'text-emerald-400 text-[11px]' : 'text-rose-400 text-[11px]'}>
+                    <span className={c.estoque ? 'text-emerald-400 text-[10px]' : 'text-rose-400 text-[10px]'}>
                       {c.estoque ? 'Em Estoque' : 'Indisponível'}
                     </span>
                   </div>

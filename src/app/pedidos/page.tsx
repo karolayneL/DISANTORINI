@@ -98,7 +98,7 @@ export default function PedidosPage() {
     total: {
       vProd: valorTotalVenda.toFixed(2),
       vNF: valorTotalVenda.toFixed(2),
-      vTotTrib: (valorTotalVenda * 0.085).toFixed(2), // 8.5% impostos
+      vTotTrib: (valorTotalVenda * 0.085).toFixed(2),
     },
     det: [
       {
@@ -106,7 +106,7 @@ export default function PedidosPage() {
         prod: {
           cProd: 'SANTO-2026',
           xProd: `Sandália Rasteira Santorini Grécia - Cor: ${corSelecionada} - Grade 34 ao 42 (${totalPares} pares)`,
-          NCM: '64022000', // Calçados com sola e parte superior de borracha ou plástico
+          NCM: '64022000',
           CFOP: '5101',
           uCom: 'PAR',
           qCom: totalPares.toString(),
@@ -130,22 +130,22 @@ export default function PedidosPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <ShoppingCart className="w-6 h-6 text-sky-400" />
-            Módulo 4 & 5: Gestão de Lotes, Grade & Exportação
+          <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
+            <ShoppingCart className="w-5 h-5 text-[#d4af37]" />
+            <span>Módulo 4 & 5: Gestão de Lotes, Grade & Pedidos</span>
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
-            Distribuição de pares do 34 ao 42, consolidação de insumos e integração com SEFAZ-CE.
+          <p className="text-xs text-neutral-400 mt-1">
+            Distribuição de pares do 34 ao 42, consolidação de insumos e integração SEFAZ-CE.
           </p>
         </div>
 
         <div className="flex gap-3">
           <button
             onClick={() => setSefazPayloadModal(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-600/80 hover:bg-purple-600 text-white font-semibold text-xs transition-all shadow-lg shadow-purple-600/20"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#181820] hover:bg-[#202028] border border-[#c5a059]/40 text-[#dfc175] font-semibold text-xs transition-all shadow-sm cursor-pointer"
           >
-            <Send className="w-4 h-4" />
-            <span>Simulação SEFAZ-CE</span>
+            <Send className="w-3.5 h-3.5" />
+            <span>Simulação JSON SEFAZ-CE</span>
           </button>
         </div>
       </div>
@@ -154,145 +154,178 @@ export default function PedidosPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Painel Esquerdo: Cabeçalho do Pedido */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-            <h2 className="text-base font-semibold text-white flex items-center gap-2">
-              <CreditCard className="w-4 h-4 text-amber-400" />
+          <div className="bg-[#121216] p-6 rounded-2xl border border-[#23232b] shadow-xl space-y-4">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2 pb-3 border-b border-[#202028]">
+              <CreditCard className="w-4 h-4 text-[#d4af37]" />
               <span>Dados Comerciais do Pedido</span>
             </h2>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Cliente</label>
-              <input
-                type="text"
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Cliente</label>
+              <select
                 value={clienteNome}
                 onChange={(e) => setClienteNome(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400"
-              />
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
+              >
+                <option value="CALCADOS SANTORINI LTDA">CALCADOS SANTORINI LTDA (CE)</option>
+                <option value="BOUTIQUE CARIRI">BOUTIQUE CARIRI CALCADOS (CE)</option>
+                <option value="DISTRIBUIDORA NORDESTE">DISTRIBUIDORA NORDESTE SHOES (PE)</option>
+              </select>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Produto / Ficha Técnica</label>
-              <input
-                type="text"
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Modelo do Calçado</label>
+              <select
                 value={produtoReferencia}
                 onChange={(e) => setProdutoReferencia(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400"
-              />
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
+              >
+                <option value="SANTO-2026">SANTO-2026 - Rasteira Santorini Grécia</option>
+                <option value="SANTO-BLOCO-01">SANTO-BLOCO-01 - Salto Bloco 5cm Nobre</option>
+                <option value="SANTO-PAPETE-02">SANTO-PAPETE-02 - Papete Anatômica Couro</option>
+              </select>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Cor do Catálogo (12 Pré-Definidas)</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Cor do Catálogo Santorini</label>
               <select
                 value={corSelecionada}
                 onChange={(e) => setCorSelecionada(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
               >
                 {CORES_DISANTORINI.map((cor) => (
-                  <option key={cor} value={cor}>{cor}</option>
+                  <option key={cor} value={cor}>
+                    {cor}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Condição de Pagamento</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Condição de Pagamento</label>
               <input
                 type="text"
                 value={condicaoPagamento}
                 onChange={(e) => setCondicaoPagamento(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Previsão de Entrega</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Previsão de Entrega</label>
               <input
                 type="date"
                 value={previsaoEntrega}
                 onChange={(e) => setPrevisaoEntrega(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
               />
             </div>
           </div>
 
-          {/* Resumo Financeiro */}
-          <div className="glass-panel p-6 rounded-2xl border border-sky-500/30 space-y-3">
-            <h3 className="text-sm font-bold text-sky-400 uppercase tracking-wider">Totalização do Pedido</h3>
-            <div className="flex justify-between text-sm text-slate-300">
-              <span>Total de Pares no Lote:</span>
-              <span className="font-bold text-white">{totalPares} pares</span>
+          {/* Resumo Financeiro do Lote */}
+          <div className="bg-[#121216] p-6 rounded-2xl border border-[#c5a059]/30 shadow-xl space-y-4">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-[#d4af37] pb-2 border-b border-[#202028]">
+              Resumo do Pedido
+            </h3>
+            <div className="space-y-2 text-xs">
+              <div className="flex justify-between text-neutral-400">
+                <span>Total de Pares:</span>
+                <span className="font-bold text-white font-mono">{totalPares} pares</span>
+              </div>
+              <div className="flex justify-between text-neutral-400">
+                <span>Preço Unitário (Markup):</span>
+                <span className="font-mono text-white">R$ {precoUnitarioVenda.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-neutral-400">
+                <span>Custo Unitário Total:</span>
+                <span className="font-mono text-[#dfc175]">R$ {custoUnitarioBase.toFixed(2)}</span>
+              </div>
+              <div className="pt-2 border-t border-[#1e1e26] flex justify-between text-sm font-bold text-white">
+                <span>Faturamento Total:</span>
+                <span className="font-mono text-white">R$ {valorTotalVenda.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-xs font-semibold text-emerald-400">
+                <span>Margem Bruta Prevista:</span>
+                <span className="font-mono">R$ {(valorTotalVenda - valorTotalCusto).toFixed(2)}</span>
+              </div>
             </div>
-            <div className="flex justify-between text-sm text-slate-300">
-              <span>Custo Total Estimado:</span>
-              <span className="font-mono text-slate-400">R$ {valorTotalCusto.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between text-base font-bold text-emerald-400 pt-2 border-t border-slate-800">
-              <span>Valor Total de Venda:</span>
-              <span className="font-mono text-xl">R$ {valorTotalVenda.toFixed(2)}</span>
-            </div>
+
+            <button
+              type="button"
+              className="w-full py-3 rounded-lg bg-gradient-to-r from-[#dfc175] via-[#c5a059] to-[#a37f37] hover:brightness-110 text-black font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer mt-2"
+            >
+              Emitir Ordem de Produção
+            </button>
           </div>
         </div>
 
-        {/* Painel Direito: Grade de Tamanhos & Explosão de Insumos */}
+        {/* Painel Direito: Grade de Tamanhos & Explosão do Lote */}
         <div className="lg:col-span-2 space-y-6">
           {/* Grade 34 ao 42 */}
-          <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <h2 className="text-base font-semibold text-white flex items-center gap-2">
-                <Layers className="w-5 h-5 text-amber-400" />
-                <span>Grade de Tamanhos (Padrão 34 ao 42)</span>
-              </h2>
-              <span className="text-xs font-bold text-slate-300 bg-slate-800 px-2.5 py-1 rounded-full">
-                Soma: {totalPares} pares
+          <div className="bg-[#121216] p-6 rounded-2xl border border-[#23232b] shadow-xl space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#202028]">
+              <div>
+                <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-[#d4af37]" />
+                  <span>Distribuição da Grade (34 ao 42)</span>
+                </h2>
+                <p className="text-xs text-neutral-400 mt-0.5">
+                  Informe a quantidade de pares por numeração do lote industrial.
+                </p>
+              </div>
+              <span className="text-xs font-mono font-bold px-3 py-1 rounded bg-[#c5a059]/15 text-[#dfc175] border border-[#c5a059]/30">
+                Total: {totalPares} pares
               </span>
             </div>
 
-            <div className="grid grid-cols-3 sm:grid-cols-9 gap-3">
-              {[34, 35, 36, 37, 38, 39, 40, 41, 42].map((tam) => (
-                <div key={tam} className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center space-y-1.5">
-                  <span className="text-xs font-bold text-sky-400 block font-mono">Nº {tam}</span>
+            <div className="grid grid-cols-3 sm:grid-cols-9 gap-2.5">
+              {[34, 35, 36, 37, 38, 39, 40, 41, 42].map((num) => (
+                <div key={num} className="bg-[#09090b] border border-[#272732] rounded-xl p-2.5 text-center space-y-1">
+                  <span className="text-xs font-bold text-[#d4af37] block">Nº {num}</span>
                   <input
                     type="number"
                     min="0"
-                    value={grade[tam as keyof typeof grade]}
-                    onChange={(e) => handleGradeChange(tam, parseInt(e.target.value, 10))}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 text-center text-sm font-bold text-white focus:outline-none focus:border-amber-400"
+                    value={grade[num as keyof typeof grade]}
+                    onChange={(e) => handleGradeChange(num, parseInt(e.target.value) || 0)}
+                    className="w-full bg-[#121216] border border-[#2a2a36] rounded-lg text-center font-mono font-bold text-white text-sm py-1.5 focus:outline-none focus:border-[#d4af37]"
                   />
+                  <span className="text-[10px] text-neutral-500">pares</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Explosão do Lote (Consumo Total de Insumos) */}
-          <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+          <div className="bg-[#121216] p-6 rounded-2xl border border-[#23232b] shadow-xl space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#202028]">
               <div>
-                <h2 className="text-base font-semibold text-white flex items-center gap-2">
-                  <Scissors className="w-5 h-5 text-emerald-400" />
-                  <span>Consumo Total de Insumos para este Lote ({totalPares} pares)</span>
+                <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
+                  <Scissors className="w-4 h-4 text-[#d4af37]" />
+                  <span>Explosão do Lote & Requisição de Almoxarifado</span>
                 </h2>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Multiplicação automática da ficha técnica pelo total de pares do pedido.
+                <p className="text-xs text-neutral-400 mt-0.5">
+                  Multiplicação exata da Ficha Técnica (BOM) pelo total de {totalPares} pares.
                 </p>
               </div>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs text-slate-300">
-                <thead className="bg-slate-900/80 uppercase tracking-wider text-slate-400 border-b border-slate-800">
+              <table className="w-full text-left text-xs text-neutral-300">
+                <thead className="bg-[#09090b] text-[10px] font-bold uppercase tracking-wider text-neutral-400 border-b border-[#23232b]">
                   <tr>
-                    <th className="py-2.5 px-3">Matéria-Prima</th>
+                    <th className="py-2.5 px-3">Insumo Requisitado</th>
                     <th className="py-2.5 px-3">Consumo / Par</th>
-                    <th className="py-2.5 px-3 text-emerald-400 font-bold">Total Necessário</th>
-                    <th className="py-2.5 px-3">Fornecedor Sugerido</th>
+                    <th className="py-2.5 px-3">Total Necessário (Lote)</th>
+                    <th className="py-2.5 px-3">Fornecedor Cotado</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800">
-                  {insumosConsolidados.map((item, idx) => (
-                    <tr key={idx} className="hover:bg-slate-800/40">
-                      <td className="py-3 px-3 font-medium text-white">{item.nome}</td>
-                      <td className="py-3 px-3 text-slate-400">{item.consumoPorPar}</td>
-                      <td className="py-3 px-3 font-mono font-bold text-emerald-400 text-sm">{item.total}</td>
-                      <td className="py-3 px-3 text-slate-300">{item.fornecedor}</td>
+                <tbody className="divide-y divide-[#1e1e26]">
+                  {insumosConsolidados.map((ins, idx) => (
+                    <tr key={idx} className="hover:bg-[#181820] transition-colors">
+                      <td className="py-3 px-3 font-semibold text-white">{ins.nome}</td>
+                      <td className="py-3 px-3 font-mono text-neutral-400">{ins.consumoPorPar}</td>
+                      <td className="py-3 px-3 font-mono font-bold text-[#dfc175]">{ins.total}</td>
+                      <td className="py-3 px-3 text-neutral-300">{ins.fornecedor}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -302,42 +335,30 @@ export default function PedidosPage() {
         </div>
       </div>
 
-      {/* Modal / Visualizador SEFAZ-CE */}
+      {/* Modal SEFAZ-CE */}
       {sefazPayloadModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="glass-panel w-full max-w-2xl p-6 rounded-2xl border border-purple-500/40 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <h3 className="text-base font-bold text-purple-300 flex items-center gap-2">
-                <Send className="w-5 h-5 text-purple-400" />
-                <span>Payload Virtual de Integração SEFAZ-CE (NFe 4.00)</span>
-              </h3>
+          <div className="bg-[#121216] border border-[#23232b] rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#202028]">
+              <div className="flex items-center gap-2">
+                <Send className="w-4 h-4 text-[#d4af37]" />
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider">Payload Estruturado SEFAZ-CE (NFe 4.0)</h3>
+              </div>
               <button
                 onClick={() => setSefazPayloadModal(false)}
-                className="text-slate-400 hover:text-white text-xs px-2 py-1 rounded bg-slate-800"
+                className="text-neutral-400 hover:text-white text-xs font-bold px-2 py-1 rounded bg-[#181820]"
               >
-                Fechar
+                ✕ Fechar
               </button>
             </div>
-
-            <p className="text-xs text-slate-300">
-              Estrutura pronta em JSON para transmissão ao web service da Secretaria da Fazenda do Estado do Ceará:
+            
+            <p className="text-xs text-neutral-400">
+              Estrutura JSON pronta para transmissão ao WebService da SEFAZ Ceará para faturamento de calçados (NCM 6402.20.00).
             </p>
 
-            <pre className="p-4 rounded-xl bg-slate-950 text-xs font-mono text-emerald-400 overflow-x-auto max-h-96 border border-slate-800">
+            <pre className="bg-[#09090b] border border-[#23232b] p-4 rounded-xl text-[11px] font-mono text-[#dfc175] overflow-x-auto max-h-80">
               {JSON.stringify(payloadSefazCE, null, 2)}
             </pre>
-
-            <div className="flex justify-end">
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(JSON.stringify(payloadSefazCE, null, 2));
-                  alert('Payload SEFAZ-CE copiado para a área de transferência!');
-                }}
-                className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-all"
-              >
-                Copiar JSON do Payload
-              </button>
-            </div>
           </div>
         </div>
       )}

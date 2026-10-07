@@ -9,25 +9,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        santorini: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
+        background: "#09090b",
+        foreground: "#f4f4f5",
+        brand: {
+          dark: "#0a0a0c",
+          surface: "#121215",
+          card: "#17171c",
+          border: "#26262e",
+          borderLight: "#383844",
         },
         gold: {
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
+          50: '#fbf8ee',
+          100: '#f5edd3',
+          200: '#ecd9a7',
+          300: '#dfc175',
+          400: '#d4af37', // Dourado Nobre Principal
+          500: '#c5a059', // Dourado Satin
+          600: '#a37f37',
+          700: '#82602b',
+          800: '#674a24',
+          900: '#523a1e',
         }
       },
     },

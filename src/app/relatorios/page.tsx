@@ -4,18 +4,13 @@ import React, { useRef } from 'react';
 import { 
   FileText, 
   Printer, 
-  Download, 
   Building2, 
-  Calendar, 
   CreditCard, 
   Package, 
-  ShieldCheck,
   Sparkles
 } from 'lucide-react';
 
 export default function RelatoriosPage() {
-  const relatorioRef = useRef<HTMLDivElement>(null);
-
   const dadosRelatorio = {
     numeroPedido: 'DS-2026-0842',
     dataEmissao: '05/10/2026',
@@ -54,136 +49,133 @@ export default function RelatoriosPage() {
       {/* Header & Ações */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 print:hidden">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <FileText className="w-6 h-6 text-sky-400" />
-            Módulo 5: Ordem de Produção & Relatório Comercial (PDF)
+          <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
+            <FileText className="w-5 h-5 text-[#d4af37]" />
+            <span>Módulo 5: Ordem de Produção & Relatório Comercial (PDF)</span>
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Resumo desmembrado por categoria, cálculo de caixas externas, pagamentos e totais.
           </p>
         </div>
 
         <button
           onClick={handlePrint}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm shadow-lg shadow-sky-500/20 transition-all"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#dfc175] via-[#c5a059] to-[#a37f37] hover:brightness-110 text-black font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
         >
           <Printer className="w-4 h-4" />
-          <span>Imprimir / Salvar em PDF</span>
+          <span>Imprimir / Gerar PDF</span>
         </button>
       </div>
 
-      {/* Documento de Impressão / Folha do Pedido */}
-      <div 
-        ref={relatorioRef} 
-        className="bg-white text-slate-900 p-8 sm:p-12 rounded-2xl shadow-2xl border border-slate-200 print:border-none print:shadow-none print:p-0 print:m-0 space-y-8"
-      >
-        {/* Cabeçalho da Empresa */}
-        <div className="flex justify-between items-start border-b-2 border-slate-900 pb-6">
+      {/* Relatório Formatado / A4 Impressão */}
+      <div className="bg-[#121216] border border-[#23232b] rounded-2xl p-8 space-y-6 print:bg-white print:text-black print:p-0 print:border-none shadow-xl">
+        {/* Cabeçalho do Documento */}
+        <div className="flex justify-between items-start border-b border-[#202028] pb-6 print:border-neutral-300">
           <div>
-            <h2 className="text-2xl font-black tracking-widest text-slate-900">D I S A N T O R I N I</h2>
-            <p className="text-xs uppercase tracking-wider font-bold text-slate-600">
-              Indústria e Comércio de Calçados Femininos Ltda
-            </p>
-            <p className="text-xs text-slate-500 mt-1">Polo Calçadista do Cariri • Ceará - Brasil</p>
-          </div>
-          <div className="text-right">
-            <div className="inline-block px-3 py-1 rounded bg-slate-900 text-white font-mono font-bold text-sm">
-              PEDIDO #{dadosRelatorio.numeroPedido}
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-xl tracking-widest text-white print:text-black">DISANTORINI</span>
             </div>
-            <p className="text-xs text-slate-500 mt-1">Emissão: {dadosRelatorio.dataEmissao}</p>
-            <p className="text-xs font-bold text-emerald-700">Previsão Entrega: {dadosRelatorio.previsaoEntrega}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[#c5a059] print:text-black">
+              ERP - X • Footwear Manufacturing OS
+            </p>
+            <p className="text-xs text-neutral-400 mt-1 print:text-neutral-600">
+              Juazeiro do Norte - Polo Calçadista do Cariri, Ceará
+            </p>
+          </div>
+
+          <div className="text-right">
+            <span className="text-xs font-mono uppercase tracking-wider text-neutral-400">Ordem de Produção & Faturamento</span>
+            <div className="text-lg font-mono font-black text-[#dfc175] print:text-black">
+              #{dadosRelatorio.numeroPedido}
+            </div>
+            <p className="text-xs text-neutral-400 print:text-neutral-600">Emissão: {dadosRelatorio.dataEmissao}</p>
           </div>
         </div>
 
         {/* Dados do Cliente */}
-        <div className="grid grid-cols-2 gap-6 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl bg-[#0d0d10] border border-[#23232b] print:bg-neutral-50 print:border-neutral-200">
           <div>
-            <span className="font-bold text-slate-500 uppercase block text-[10px]">Cliente / Razão Social</span>
-            <span className="font-bold text-slate-900 text-sm">{dadosRelatorio.cliente.razaoSocial}</span>
-            <p className="text-slate-600 mt-0.5">Nome Fantasia: {dadosRelatorio.cliente.nomeFantasia}</p>
-            <p className="text-slate-600">CNPJ: {dadosRelatorio.cliente.cnpj} • IE: {dadosRelatorio.cliente.inscricaoEstadual}</p>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#dfc175] print:text-neutral-800">
+              Dados do Destinatário / Cliente
+            </span>
+            <h3 className="font-bold text-sm text-white print:text-black mt-1">{dadosRelatorio.cliente.razaoSocial}</h3>
+            <p className="text-xs text-neutral-400 print:text-neutral-700">CNPJ: {dadosRelatorio.cliente.cnpj} • IE: {dadosRelatorio.cliente.inscricaoEstadual}</p>
+            <p className="text-xs text-neutral-400 print:text-neutral-700">{dadosRelatorio.cliente.endereco}</p>
+            <p className="text-xs text-neutral-400 print:text-neutral-700">{dadosRelatorio.cliente.cidadeUf}</p>
           </div>
+
           <div>
-            <span className="font-bold text-slate-500 uppercase block text-[10px]">Endereço & Contatos</span>
-            <p className="text-slate-800 font-medium">{dadosRelatorio.cliente.endereco}</p>
-            <p className="text-slate-800">{dadosRelatorio.cliente.cidadeUf}</p>
-            <p className="text-slate-600 mt-0.5">Tel: {dadosRelatorio.cliente.contato}</p>
-          </div>
-        </div>
-
-        {/* Tabela Desmembrada por Categorias */}
-        <div>
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-            Desmembramento do Pedido por Categoria de Calçado
-          </h3>
-          <table className="w-full text-left text-xs border border-slate-300">
-            <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-300">
-              <tr>
-                <th className="p-2.5">Categoria</th>
-                <th className="p-2.5 text-center">Qte (Pares)</th>
-                <th className="p-2.5 text-right">Custo Base Ref.</th>
-                <th className="p-2.5 text-right">Subtotal Custo</th>
-                <th className="p-2.5 text-right">Preço Venda Un.</th>
-                <th className="p-2.5 text-right">Subtotal Venda</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-200">
-              {dadosRelatorio.categoriasResumo.map((cat, idx) => (
-                <tr key={idx} className="hover:bg-slate-50">
-                  <td className="p-2.5 font-bold text-slate-900">{cat.categoria}</td>
-                  <td className="p-2.5 text-center font-bold">{cat.pares}</td>
-                  <td className="p-2.5 text-right text-slate-600 font-mono">R$ {cat.custoBaseSimulado.toFixed(2)}</td>
-                  <td className="p-2.5 text-right text-slate-700 font-mono">R$ {cat.subtotalCusto.toFixed(2)}</td>
-                  <td className="p-2.5 text-right font-mono font-semibold text-slate-900">R$ {cat.precoVendaSugerido.toFixed(2)}</td>
-                  <td className="p-2.5 text-right font-mono font-bold text-slate-900">R$ {cat.subtotalVenda.toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Cálculo de Caixas e Condição Comercial */}
-        <div className="grid grid-cols-2 gap-6 pt-2">
-          <div className="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
-            <span className="font-bold text-slate-500 uppercase block text-[10px]">Condição Comercial & Embalagens</span>
-            <div>
-              <span className="font-semibold text-slate-700">Forma de Pagamento Acordada:</span>
-              <p className="font-bold text-slate-900 mt-0.5">{dadosRelatorio.condicaoPagamento}</p>
-            </div>
-            <div>
-              <span className="font-semibold text-slate-700">Caixas Externas Individuais:</span>
-              <p className="text-slate-800">
-                {totalPares} caixas a R$ {dadosRelatorio.custoCaixaPorPar.toFixed(2)}/par = <strong className="font-mono">R$ {totalCustoCaixas.toFixed(2)}</strong> (Incluso no custo fabril)
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#dfc175] print:text-neutral-800">
+              Condições Comerciais & Entrega
+            </span>
+            <div className="mt-1 space-y-1 text-xs">
+              <p className="text-neutral-300 print:text-black">
+                <strong>Condição:</strong> {dadosRelatorio.condicaoPagamento}
+              </p>
+              <p className="text-neutral-300 print:text-black">
+                <strong>Previsão de Entrega:</strong> {dadosRelatorio.previsaoEntrega}
+              </p>
+              <p className="text-neutral-300 print:text-black">
+                <strong>Contato:</strong> {dadosRelatorio.cliente.contato}
               </p>
             </div>
           </div>
+        </div>
 
-          <div className="space-y-2 bg-slate-900 text-white p-5 rounded-xl text-xs">
-            <span className="font-bold text-sky-400 uppercase tracking-wider block text-[10px]">Resumo Financeiro Total</span>
-            <div className="flex justify-between text-slate-300">
-              <span>Volume Total:</span>
-              <span className="font-bold text-white">{totalPares} Pares</span>
-            </div>
-            <div className="flex justify-between text-slate-400">
-              <span>Custo Fabril Consolidado:</span>
-              <span className="font-mono">R$ {(totalCustoBase + totalCustoCaixas).toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between text-base font-extrabold text-amber-300 pt-3 border-t border-slate-700">
-              <span>VALOR TOTAL DO PEDIDO:</span>
-              <span className="font-mono text-xl">R$ {totalVendaFinal.toFixed(2)}</span>
-            </div>
+        {/* Tabela de Produtos por Categoria */}
+        <div className="space-y-2">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-300 print:text-black">
+            Detalhamento por Categorias de Calçado
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs text-neutral-300 print:text-black">
+              <thead className="bg-[#09090b] text-[10px] font-bold uppercase tracking-wider text-neutral-400 border-b border-[#23232b] print:bg-neutral-100 print:text-neutral-800">
+                <tr>
+                  <th className="py-2.5 px-3">Categoria</th>
+                  <th className="py-2.5 px-3">Custo Base Ref.</th>
+                  <th className="py-2.5 px-3 text-center">Pares</th>
+                  <th className="py-2.5 px-3 text-right">Subtotal Custo</th>
+                  <th className="py-2.5 px-3 text-right">Preço Sugerido (Markup)</th>
+                  <th className="py-2.5 px-3 text-right">Subtotal Venda</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#1e1e26] print:divide-neutral-200">
+                {dadosRelatorio.categoriasResumo.map((cat, i) => (
+                  <tr key={i}>
+                    <td className="py-3 px-3 font-semibold text-white print:text-black">{cat.categoria}</td>
+                    <td className="py-3 px-3 font-mono">R$ {cat.custoBaseSimulado.toFixed(2)}</td>
+                    <td className="py-3 px-3 font-mono text-center font-bold text-[#dfc175] print:text-black">{cat.pares}</td>
+                    <td className="py-3 px-3 font-mono text-right">R$ {cat.subtotalCusto.toFixed(2)}</td>
+                    <td className="py-3 px-3 font-mono text-right">R$ {cat.precoVendaSugerido.toFixed(2)}</td>
+                    <td className="py-3 px-3 font-mono text-right font-bold text-white print:text-black">R$ {cat.subtotalVenda.toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
-        {/* Assinaturas */}
-        <div className="pt-12 grid grid-cols-2 gap-12 text-center text-xs text-slate-500">
-          <div className="border-t border-slate-400 pt-2">
-            <p className="font-bold text-slate-800">D I S A N T O R I N I - Produção</p>
-            <p>Visto Gerência Fabril</p>
+        {/* Totais & Resumo Final */}
+        <div className="p-4 rounded-xl bg-[#09090b] border border-[#23232b] print:bg-neutral-100 print:border-neutral-300 space-y-2 text-xs">
+          <div className="flex justify-between text-neutral-400 print:text-neutral-700">
+            <span>Total de Pares do Lote:</span>
+            <span className="font-mono font-bold text-white print:text-black">{totalPares} pares</span>
           </div>
-          <div className="border-t border-slate-400 pt-2">
-            <p className="font-bold text-slate-800">{dadosRelatorio.cliente.razaoSocial}</p>
-            <p>De acordo / Aceite do Pedido</p>
+          <div className="flex justify-between text-neutral-400 print:text-neutral-700">
+            <span>Subtotal de Custo Fabril Base:</span>
+            <span className="font-mono text-white print:text-black">R$ {totalCustoBase.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between text-neutral-400 print:text-neutral-700">
+            <span>Custo Adicional Obrigatório de Caixas ({totalPares} un x R$ {dadosRelatorio.custoCaixaPorPar.toFixed(2)}):</span>
+            <span className="font-mono text-[#dfc175] print:text-black font-semibold">R$ {totalCustoCaixas.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between text-neutral-400 print:text-neutral-700 pt-1 border-t border-[#1e1e26] print:border-neutral-300">
+            <span>Custo Total Consolidado da Produção:</span>
+            <span className="font-mono font-bold text-white print:text-black">R$ {(totalCustoBase + totalCustoCaixas).toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between items-center text-sm font-black text-white print:text-black pt-2 border-t border-[#2a2a36] print:border-neutral-400">
+            <span>VALOR TOTAL DO PEDIDO (FATURAMENTO):</span>
+            <span className="font-mono text-base text-[#dfc175] print:text-black">R$ {totalVendaFinal.toFixed(2)}</span>
           </div>
         </div>
       </div>

@@ -225,33 +225,33 @@ export default function ClientesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Building2 className="w-6 h-6 text-sky-400" />
-            Módulo 1: Cadastro de Clientes
+          <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
+            <Building2 className="w-5 h-5 text-[#d4af37]" />
+            <span>Módulo 1: Cadastro de Clientes</span>
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Preenchimento automático via BrasilAPI (Receita Federal) e integração com Supabase.
           </p>
         </div>
       </div>
 
       {/* Formulário de Cadastro */}
-      <div className="glass-panel p-6 rounded-2xl border border-slate-800 shadow-xl space-y-6">
-        <div className="flex items-center gap-2 pb-4 border-b border-slate-800">
-          <Plus className="w-5 h-5 text-amber-400" />
-          <h2 className="text-base font-semibold text-white">Novo Cliente (Pessoa Jurídica / Física)</h2>
+      <div className="bg-[#121216] p-6 sm:p-7 rounded-2xl border border-[#23232b] shadow-xl space-y-6">
+        <div className="flex items-center gap-2 pb-4 border-b border-[#202028]">
+          <Plus className="w-4 h-4 text-[#d4af37]" />
+          <h2 className="text-sm font-bold uppercase tracking-wider text-white">Novo Cliente (Pessoa Jurídica / Física)</h2>
         </div>
 
         {saveMessage && (
-          <div className={`p-4 rounded-xl text-sm flex items-center gap-3 ${
+          <div className={`p-4 rounded-xl text-xs flex items-center gap-3 ${
             saveMessage.type === 'success' 
-              ? 'bg-emerald-950/60 border border-emerald-500/30 text-emerald-300'
-              : 'bg-rose-950/60 border border-rose-500/30 text-rose-300'
+              ? 'bg-emerald-950/40 border border-emerald-500/30 text-emerald-300'
+              : 'bg-rose-950/40 border border-rose-500/30 text-rose-300'
           }`}>
             {saveMessage.type === 'success' ? (
-              <CheckCircle className="w-5 h-5 flex-shrink-0 text-emerald-400" />
+              <CheckCircle className="w-4 h-4 flex-shrink-0 text-emerald-400" />
             ) : (
-              <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-400" />
+              <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-400" />
             )}
             <span>{saveMessage.text}</span>
           </div>
@@ -260,8 +260,8 @@ export default function ClientesPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" autoComplete="off">
 
           {/* Seção CNPJ + Busca BrasilAPI */}
-          <div className="p-4 rounded-xl bg-slate-900/80 border border-sky-500/20 space-y-3">
-            <label className="block text-xs font-bold uppercase tracking-wider text-sky-300">
+          <div className="p-4 rounded-xl bg-[#0d0d10] border border-[#262632] space-y-3">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#dfc175]">
               Consulta de CNPJ na BrasilAPI (Auto-Preenchimento)
             </label>
             <div className="flex flex-col sm:flex-row gap-3">
@@ -271,26 +271,26 @@ export default function ClientesPage() {
                   placeholder="Ex: 00.000.000/0001-91 (apenas números ou formatado)"
                   {...register('cnpj_cpf')}
                   autoComplete="off"
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-sky-400"
+                  className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/30 font-mono"
                 />
                 {errors.cnpj_cpf && (
-                  <p className="text-xs text-rose-400 mt-1">{errors.cnpj_cpf.message}</p>
+                  <p className="text-[11px] text-rose-400 mt-1">{errors.cnpj_cpf.message}</p>
                 )}
               </div>
               <button
                 type="button"
                 onClick={handleBuscarCnpj}
                 disabled={loadingCnpj}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition-all disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#dfc175] to-[#c5a059] hover:brightness-110 text-black font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 cursor-pointer shadow-sm"
               >
                 {loadingCnpj ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-3.5 h-3.5 animate-spin text-black" />
                     <span>Consultando...</span>
                   </>
                 ) : (
                   <>
-                    <Search className="w-4 h-4" />
+                    <Search className="w-3.5 h-3.5" />
                     <span>Buscar CNPJ</span>
                   </>
                 )}
@@ -298,16 +298,16 @@ export default function ClientesPage() {
             </div>
 
             {cnpjError && (
-              <p className="text-xs text-rose-400 flex items-center gap-1 mt-2">
+              <p className="text-[11px] text-rose-400 flex items-center gap-1.5 mt-2">
                 <AlertCircle className="w-3.5 h-3.5" />
-                {cnpjError}
+                <span>{cnpjError}</span>
               </p>
             )}
 
             {cnpjSuccess && (
-              <p className="text-xs text-emerald-400 flex items-center gap-1 mt-2">
+              <p className="text-[11px] text-emerald-400 flex items-center gap-1.5 mt-2">
                 <CheckCircle className="w-3.5 h-3.5" />
-                {cnpjSuccess}
+                <span>{cnpjSuccess}</span>
               </p>
             )}
           </div>
@@ -315,27 +315,27 @@ export default function ClientesPage() {
           {/* Dados Empresariais */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Razão Social *</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Razão Social *</label>
               <input
                 type="text"
                 {...register('razao_social')}
                 placeholder="Razão Social completa"
                 autoComplete="off"
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
               />
               {errors.razao_social && (
-                <p className="text-xs text-rose-400 mt-1">{errors.razao_social.message}</p>
+                <p className="text-[11px] text-rose-400 mt-1">{errors.razao_social.message}</p>
               )}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Nome Fantasia</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Nome Fantasia</label>
               <input
                 type="text"
                 {...register('nome_fantasia')}
                 placeholder="Nome Fantasia"
                 autoComplete="off"
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
               />
             </div>
           </div>
@@ -343,65 +343,65 @@ export default function ClientesPage() {
           {/* Contatos & Inscrição */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Inscrição Estadual (IE)</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Inscrição Estadual (IE)</label>
               <input
                 type="text"
                 {...register('inscricao_estadual')}
                 placeholder="Isento ou nº da IE"
                 autoComplete="off"
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">E-mail Comercial</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">E-mail Comercial</label>
               <input
                 type="email"
                 {...register('email')}
                 placeholder="compras@cliente.com"
                 autoComplete="off"
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
               />
               {errors.email && (
-                <p className="text-xs text-rose-400 mt-1">{errors.email.message}</p>
+                <p className="text-[11px] text-rose-400 mt-1">{errors.email.message}</p>
               )}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Telefone Fixo</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">Telefone Fixo</label>
               <input
                 type="text"
                 {...register('telefone')}
                 placeholder="(88) 3511-0000"
                 autoComplete="off"
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">WhatsApp de Pedidos</label>
+              <label className="block text-xs font-semibold text-neutral-300 mb-1.5">WhatsApp de Pedidos</label>
               <input
                 type="text"
                 {...register('whatsapp')}
                 placeholder="(88) 99999-0000"
                 autoComplete="off"
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
               />
             </div>
           </div>
 
           {/* Endereço Completo */}
-          <div className="p-4 rounded-xl bg-slate-900/40 border border-slate-800 space-y-4">
-            <div className="flex items-center gap-2 text-slate-300 text-xs font-bold uppercase tracking-wider">
-              <MapPin className="w-4 h-4 text-sky-400" />
+          <div className="p-4 rounded-xl bg-[#0d0d10] border border-[#22222a] space-y-4">
+            <div className="flex items-center gap-2 text-neutral-300 text-[11px] font-bold uppercase tracking-wider">
+              <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
               <span>Endereço de Entrega e Faturamento</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5">
               <div className="md:col-span-3">
-                <label className="block text-xs font-semibold text-slate-300 mb-1 flex items-center justify-between">
+                <label className="block text-xs font-semibold text-neutral-300 mb-1 flex items-center justify-between">
                   <span>CEP</span>
-                  {loadingCep && <span className="text-[10px] text-sky-400 animate-pulse">Buscando...</span>}
+                  {loadingCep && <span className="text-[10px] text-[#dfc175] animate-pulse">Buscando...</span>}
                 </label>
                 <input
                   type="text"
@@ -412,101 +412,100 @@ export default function ClientesPage() {
                   }}
                   autoComplete="nope"
                   placeholder="63000-000"
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400 font-mono"
+                  className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37] font-mono"
                 />
               </div>
 
               <div className="md:col-span-6">
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Logradouro / Rua</label>
+                <label className="block text-xs font-semibold text-neutral-300 mb-1">Logradouro / Rua</label>
                 <input
                   type="text"
                   {...register('logradouro')}
                   autoComplete="nope"
                   placeholder="Ex: Rua / Avenida / Travessa"
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                  className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
                 />
               </div>
 
               <div className="md:col-span-3">
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Número</label>
+                <label className="block text-xs font-semibold text-neutral-300 mb-1">Número</label>
                 <input
                   type="text"
                   {...register('numero')}
                   autoComplete="new-password"
                   placeholder="Ex: 782 ou S/N"
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                  className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
                 />
               </div>
 
               <div className="md:col-span-3">
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Complemento</label>
+                <label className="block text-xs font-semibold text-neutral-300 mb-1">Complemento</label>
                 <input
                   type="text"
                   {...register('complemento')}
                   autoComplete="nope"
                   placeholder="Galpão, Sala, Bloco..."
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                  className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
                 />
               </div>
 
               <div className="md:col-span-4">
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Bairro</label>
+                <label className="block text-xs font-semibold text-neutral-300 mb-1">Bairro</label>
                 <input
                   type="text"
                   {...register('bairro')}
                   autoComplete="nope"
                   placeholder="Bairro"
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                  className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
                 />
               </div>
 
               <div className="md:col-span-4">
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Cidade *</label>
+                <label className="block text-xs font-semibold text-neutral-300 mb-1">Cidade *</label>
                 <input
                   type="text"
                   {...register('cidade')}
                   autoComplete="nope"
                   placeholder="Cidade"
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400"
+                  className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-[#d4af37]"
                 />
                 {errors.cidade && (
-                  <p className="text-xs text-rose-400 mt-1">{errors.cidade.message}</p>
+                  <p className="text-[11px] text-rose-400 mt-1">{errors.cidade.message}</p>
                 )}
               </div>
 
               <div className="md:col-span-1">
-                <label className="block text-xs font-semibold text-slate-300 mb-1">UF *</label>
+                <label className="block text-xs font-semibold text-neutral-300 mb-1">UF *</label>
                 <input
                   type="text"
                   maxLength={2}
                   {...register('uf')}
                   autoComplete="nope"
                   placeholder="CE"
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white uppercase text-center focus:outline-none focus:border-sky-400 font-bold"
+                  className="w-full bg-[#09090b] border border-[#272732] rounded-lg px-3 py-2 text-xs text-white uppercase text-center focus:outline-none focus:border-[#d4af37] font-bold"
                 />
                 {errors.uf && (
-                  <p className="text-xs text-rose-400 mt-1">{errors.uf.message}</p>
+                  <p className="text-[11px] text-rose-400 mt-1">{errors.uf.message}</p>
                 )}
               </div>
             </div>
           </div>
 
           {/* Botões de Ação */}
-
           <div className="flex justify-end gap-3 pt-2">
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/20 transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#dfc175] via-[#c5a059] to-[#a37f37] hover:brightness-110 text-black font-bold text-xs uppercase tracking-wider shadow-md transition-all disabled:opacity-50 cursor-pointer"
             >
               {saving ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-black" />
                   <span>Salvando no Supabase...</span>
                 </>
               ) : (
                 <>
-                  <CheckCircle className="w-4 h-4" />
+                  <CheckCircle className="w-3.5 h-3.5" />
                   <span>Salvar Cliente</span>
                 </>
               )}
@@ -516,15 +515,23 @@ export default function ClientesPage() {
       </div>
 
       {/* Lista de Clientes Cadastrados */}
-      <div className="glass-panel p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-        <h2 className="text-base font-semibold text-white flex items-center gap-2">
-          <FileText className="w-5 h-5 text-sky-400" />
-          <span>Clientes Cadastrados ({clientesList.length})</span>
-        </h2>
+      <div className="bg-[#121216] p-6 sm:p-7 rounded-2xl border border-[#23232b] shadow-xl space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
+            <FileText className="w-4 h-4 text-[#d4af37]" />
+            <span>Clientes Cadastrados ({clientesList.length})</span>
+          </h2>
+          {loadingClientes && (
+            <span className="text-xs text-neutral-400 flex items-center gap-1.5">
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-[#d4af37]" />
+              <span>Sincronizando banco...</span>
+            </span>
+          )}
+        </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-900/80 text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800">
+          <table className="w-full text-left text-xs text-neutral-300">
+            <thead className="bg-[#09090b] text-[10px] font-bold uppercase tracking-wider text-neutral-400 border-b border-[#23232b]">
               <tr>
                 <th className="py-3 px-4">CNPJ / CPF</th>
                 <th className="py-3 px-4">Razão Social / Nome Fantasia</th>
@@ -533,27 +540,34 @@ export default function ClientesPage() {
                 <th className="py-3 px-4">Situação</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody className="divide-y divide-[#1e1e26]">
+              {clientesList.length === 0 && !loadingClientes && (
+                <tr>
+                  <td colSpan={5} className="py-8 text-center text-neutral-500">
+                    Nenhum cliente cadastrado até o momento.
+                  </td>
+                </tr>
+              )}
               {clientesList.map((c) => (
-                <tr key={c.id} className="hover:bg-slate-800/40 transition-colors">
-                  <td className="py-3.5 px-4 font-mono text-xs text-sky-300 font-semibold">
+                <tr key={c.id} className="hover:bg-[#181820] transition-colors">
+                  <td className="py-3.5 px-4 font-mono text-xs text-[#dfc175] font-medium">
                     {formatCnpj(c.cnpj_cpf)}
                   </td>
                   <td className="py-3.5 px-4">
                     <div className="font-semibold text-white">{c.razao_social}</div>
                     {c.nome_fantasia && (
-                      <div className="text-xs text-slate-400">{c.nome_fantasia}</div>
+                      <div className="text-[11px] text-neutral-400">{c.nome_fantasia}</div>
                     )}
                   </td>
                   <td className="py-3.5 px-4">
-                    {c.cidade} - <span className="text-amber-400 font-semibold">{c.uf}</span>
-                  </td>
-                  <td className="py-3.5 px-4 text-xs">
-                    <div>{c.telefone || c.whatsapp || '-'}</div>
-                    <div className="text-slate-400">{c.email || ''}</div>
+                    {c.cidade} - <span className="text-[#d4af37] font-semibold">{c.uf}</span>
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                    <div>{c.telefone || c.whatsapp || '-'}</div>
+                    <div className="text-neutral-500">{c.email || ''}</div>
+                  </td>
+                  <td className="py-3.5 px-4">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#c5a059]/10 border border-[#c5a059]/30 text-[#dfc175]">
                       {c.situacao_cadastral || 'ATIVO'}
                     </span>
                   </td>
@@ -566,3 +580,4 @@ export default function ClientesPage() {
     </div>
   );
 }
+
