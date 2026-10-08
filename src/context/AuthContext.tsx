@@ -26,41 +26,78 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const demoUserStr = localStorage.getItem('disantorini_demo_user');
+        if (demoUserStr) {
+          return JSON.parse(demoUserStr);
+        }
+      } catch (e) {}
+    }
+    return null;
+  });
   const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const demo = localStorage.getItem('disantorini_demo_user');
+      if (demo) return false;
+    }
+    return true;
+  });
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    // 1. Verifica se há sessão ativa no Supabase ou no LocalStorage de demo
+    let isMounted = true;
+
+    // Timeout de segurança: nunca deixa a tela presa em loading por mais de 800ms
+    const safetyTimer = setTimeout(() => {
+      if (isMounted) {
+        setLoading(false);
+      }
+    }, 800);
+
     const checkUser = async () => {
       try {
-        const { data } = await supabase.auth.getSession();
-        if (data.session) {
-          setSession(data.session);
-          setUser(data.session.user);
+        const sessionPromise = supabase.auth.getSession();
+        const timeoutPromise = new Promise<{ data: { session: null } }>((resolve) => 
+          setTimeout(() => resolve({ data: { session: null } }), 600)
+        );
+
+        const res = await Promise.race([sessionPromise, timeoutPromise]);
+        if (!isMounted) return;
+
+        if (res?.data?.session) {
+          setSession(res.data.session);
+          setUser(res.data.session.user);
         } else {
-          // Verifica se há login persistido de demonstração
           const demoUserStr = localStorage.getItem('disantorini_demo_user');
           if (demoUserStr) {
-            const demoUser = JSON.parse(demoUserStr);
-            setUser(demoUser);
+            try {
+              setUser(JSON.parse(demoUserStr));
+            } catch (e) {}
           }
         }
       } catch (err) {
-        console.warn('Erro ao verificar sessão Supabase:', err);
+        console.warn('Verificação de sessão concluída com fallback:', err);
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+          clearTimeout(safetyTimer);
+        }
       }
     };
 
     checkUser();
 
-    // 2. Listener de mudanças de estado de autenticação no Supabase
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
+    // Listener de mudanças de estado de autenticação no Supabase
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, currentSession) => {
+      if (!isMounted) return;
       setSession(currentSession);
-      setUser(currentSession?.user ?? null);
+      if (currentSession?.user) {
+        setUser(currentSession.user);
+      }
       setLoading(false);
 
       if (event === 'SIGNED_IN') {
@@ -69,6 +106,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     return () => {
+      isMounted = false;
+      clearTimeout(safetyTimer);
       authListener?.subscription?.unsubscribe();
     };
   }, []);

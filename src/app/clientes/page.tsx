@@ -144,7 +144,7 @@ export default function ClientesPage() {
 
       const data = await fetchCnpjData(clean);
 
-      // Preenchimento automático do formulário com dados da Receita Federal via BrasilAPI
+      // Preenchimento automático do formulário com dados da Receita Federal
       const fullLogradouro = [data.descricao_tipo_de_logradouro, data.logradouro].filter(Boolean).join(' ');
       setValue('razao_social', data.razao_social || '');
       setValue('nome_fantasia', data.nome_fantasia || data.razao_social || '');
@@ -154,18 +154,26 @@ export default function ClientesPage() {
       setValue('complemento', data.complemento || '');
       setValue('bairro', data.bairro || '');
       setValue('cidade', data.municipio || '');
-      setValue('uf', data.uf || 'CE');
+      setValue('uf', (data.uf || 'CE').toUpperCase());
       setValue('codigo_ibge', String(data.codigo_municipio || ''));
       setValue('situacao_cadastral', data.descricao_situacao_cadastral || '');
-      setValue('cnae_principal', `${data.cnae_fiscal} - ${data.cnae_fiscal_descricao}`);
+      
+      const cnaeText = [data.cnae_fiscal, data.cnae_fiscal_descricao].filter(Boolean).join(' - ');
+      if (cnaeText) {
+        setValue('cnae_principal', cnaeText);
+      }
       
       if (data.ddd_telefone_1) {
         setValue('telefone', data.ddd_telefone_1);
       }
 
+      if (data.email) {
+        setValue('email', data.email.toLowerCase());
+      }
+
       setCnpjSuccess(`Dados de "${data.razao_social}" carregados com sucesso!`);
     } catch (err: any) {
-      setCnpjError(err.message || 'Erro ao consultar CNPJ na BrasilAPI.');
+      setCnpjError(err.message || 'Erro ao consultar CNPJ.');
     } finally {
       setLoadingCnpj(false);
     }

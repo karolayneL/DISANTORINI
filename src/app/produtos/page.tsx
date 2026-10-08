@@ -91,9 +91,9 @@ export default function ProdutosPage() {
   // Formação de Preço via Markup Divisor
   const precificacao = calcularMarkupDivisor({
     custoTotal: resultadoBOM.custoTotalPar,
-    margemLucroPercentual: margemLucro,
-    comissaoPercentual: comissao,
-    impostosPercentual: impostos,
+    margemLucroPct: margemLucro,
+    comissaoPct: comissao,
+    impostosPct: impostos,
   });
 
   return (

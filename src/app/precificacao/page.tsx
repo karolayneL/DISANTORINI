@@ -21,9 +21,9 @@ export default function PrecificacaoPage() {
   const custoTotal = custoInsumos + custoCaixa;
   const resultado = calcularMarkupDivisor({
     custoTotal,
-    margemLucroPercentual: margemLucro,
-    comissaoPercentual: comissao,
-    impostosPercentual: impostos,
+    margemLucroPct: margemLucro,
+    comissaoPct: comissao,
+    impostosPct: impostos,
   });
 
   return (
